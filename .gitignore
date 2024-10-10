@@ -1,0 +1,8 @@
+# dependencies
+node_modules
+
+# output from webpack
+dist/
+
+#for storing secrets
+.env
