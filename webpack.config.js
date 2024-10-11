@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    bundle: path.resolve(__dirname, 'src/index.js'),  // Entry point name is 'bundle'
-  },
+    bundle: path.resolve(__dirname, 'client/index.js'),  // Entry point name is 'bundle'
+  }, 
   output: {
     path: path.resolve(__dirname, 'dist'),  
     filename: '[name][contenthash].js',  // Filename template for JS bundles.  Assigns bundle to [name], [contenthash] appends a unique hash to each rebuild of bundle.
@@ -59,9 +59,9 @@ module.exports = {
   // },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Solo Project', 
+      title: 'Scratch Project', 
       filename: 'index.html',
-      template: 'src/template.html' //relative path of template.html
+      template: 'client/template.html' //relative path of template.html
     }),
     // new BundleAnalyzerPlugin(),
   ],
