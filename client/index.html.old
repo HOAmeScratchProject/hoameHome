@@ -1,4 +1,4 @@
- <!-- //// Not needed if we use template.html since HTMLWebpackPlugin will rebuild index.html from template.html with each rebuild -->
+ <!-- ////    Not needed if we use template.html since HTMLWebpackPlugin will rebuild index.html from template.html with each rebuild -->
 
 <!DOCTYPE html>
 <html>
