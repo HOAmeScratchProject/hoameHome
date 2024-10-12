@@ -42,7 +42,7 @@ const Documents = () => {
                 const docs = await response.json();
                 setDocuments(docs);
             } catch (error) {
-                console.error('error fetching docuemetns', error)
+                console.error('error fetching documents', error)
             }
          };
         
@@ -52,3 +52,5 @@ const Documents = () => {
                 </div>
          );
     }
+
+export default Documents

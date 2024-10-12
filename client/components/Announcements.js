@@ -14,9 +14,10 @@ const Annoucements = () => {
   // use map to make sure annoucements has date,message
   return (
     <div>
-      {annoucements.map((annoucements, index) => (
+      {/* {annoucements.map((annoucements, index) => (
         <div key={index}></div>
-      ))}
+      ))} */}
+      <p>Did this appear???? WOW!!!</p>
     </div>
   );
 };

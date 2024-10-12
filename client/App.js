@@ -1,9 +1,8 @@
-
-
+import Dashboard from "./components/Dashboard";
 const App = () => {
   return (
   <div>
-    Lets get started with your home!
+      <Dashboard/>
   </div>
   )
 };
