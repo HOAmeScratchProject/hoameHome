@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const apiRouter = require('./routes/api');
-//const cookieParser = require('cookie-parser') //Using later on make sure to install
+const cookieParser = require('cookie-parser') //Using later on make sure to install
 const cors = require('cors');
 
 const PORT = 3000;
@@ -10,7 +10,7 @@ const PORT = 3000;
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
-//app.use(cookieParser());
+app.use(cookieParser());
 
 app.use('/api', apiRouter);
 
