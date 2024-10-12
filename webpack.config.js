@@ -5,30 +5,30 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    bundle: path.resolve(__dirname, 'client/index.js'),  // Entry point name is 'bundle'
-  }, 
+    bundle: path.resolve(__dirname, 'client/index.js'), // Entry point name is 'bundle'
+  },
   output: {
-    path: path.resolve(__dirname, 'dist'),  
-    filename: '[name][contenthash].js',  // Filename template for JS bundles.  Assigns bundle to [name], [contenthash] appends a unique hash to each rebuild of bundle.
-    clean: true,    // Cleans old files in the output directory before each build
-    assetModuleFilename: '[name][ext]'  // Template for assest file names & their file extensions
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name][contenthash].js', // Filename template for JS bundles.  Assigns bundle to [name], [contenthash] appends a unique hash to each rebuild of bundle.
+    clean: true, // Cleans old files in the output directory before each build
+    assetModuleFilename: '[name][ext]', // Template for assest file names & their file extensions
   },
   //maps from bundle to source creating bundle.map file.  Apparently helpful for debugging w/in the bundle...?
   devtool: 'source-map',
   devServer: {
     static: {
-        directory: path.resolve(__dirname, 'dist'),  // serve static files from 'dist'
+      directory: path.resolve(__dirname, 'dist'), // serve static files from 'dist'
     },
     //changed from 3000 to 8080
     port: 8080,
-    open: true,  // Automatically opens browser when server starts
-    hot: true,  //  Enables Hot Module Replacement (HMR) w/out relaoding/refreshing the whole page
+    open: true, // Automatically opens browser when server starts
+    hot: true, //  Enables Hot Module Replacement (HMR) w/out relaoding/refreshing the whole page
     compress: true,
-    historyApiFallback: true,  //unknown routes redirect user to index.html..?
+    historyApiFallback: true, //unknown routes redirect user to index.html..?
   },
-   // Enable importing JS / JSX files without specifying their extension
+  // Enable importing JS / JSX files without specifying their extension
   resolve: {
-    extensions: [".js", ".jsx", ".json"],
+    extensions: ['.js', '.jsx', '.json'],
   },
   module: {
     rules: [
@@ -36,22 +36,28 @@ module.exports = {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
+      { test: /\.css$/, 
+        use: ['style-loader', 'css-loader'] },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-            loader: 'babel-loader',
-            // options: {
-            //   //presets are defined in my .babelrc file including preset for react
-            //     presets: ['@babel/preset-env']
-            // },
+          loader: 'babel-loader',
+          // options: {
+          //   //presets are defined in my .babelrc file including preset for react
+          //     presets: ['@babel/preset-env']
+          // },
         },
       },
       {
         //for being able to load images
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource'
-      }
+        type: 'asset/resource',
+      },
     ],
   },
   // resolve: {
@@ -59,21 +65,15 @@ module.exports = {
   // },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Scratch Project', 
+      title: 'Scratch Project',
       filename: 'index.html',
-      template: 'client/template.html' //relative path of template.html
+      template: 'client/template.html', //relative path of template.html
     }),
     // new BundleAnalyzerPlugin(),
   ],
 };
 
-
-
-
 /////*******   Clara's solo project webpack config */
-
-
-
 
 // const webpack = require('webpack');
 // const path = require('path');
