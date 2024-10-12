@@ -11,6 +11,7 @@ const Annoucements = () => {
       message: 'Please note there will be maintenance on the UGLY PEDRAM',
     },
   ]);
+  // use map to make sure annoucements has date,message
   return (
     <div>
       {annoucements.map((annoucements, index) => (
