@@ -23,14 +23,25 @@ userController.getAllUsers = async (req, res, next) => {
       },
     });
   }
-  // if a database error occurs, call next with the error message passed in
-  // for the express global error handler to catch
-  //   if (err)
-  //     return next('Error in userController.getAllUsers: ' + JSON.stringify(err));
-
-  // store retrieved users into res.locals and move on to next middleware
-  //   res.locals.users = users;
-  //   return next();
 };
+
+userController.signup = async (req, res, next) =>{
+
+
+  const {username, password} = req.body;
+ 
+  try{
+  const signupString = 'INSERT into login_info (username, password) VALUES ($1, $2) RETURNING *'
+  }
+  catch(err){
+    console.log(err)
+    next({
+      log: 'signup',
+      message: {
+        err: 'userController.signup ERROR: Check server logs for details',
+      },
+    });
+  }
+}
 
 module.exports = userController;
