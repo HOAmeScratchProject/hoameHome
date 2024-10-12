@@ -1,7 +1,7 @@
 import { use } from 'bcrypt/promises';
 import React, { useState } from 'react';
 
-const BidUploadPage = () => {
+const Bids = () => {
     // to store title of the bid (ex: pothole)
     const [title, setTitle] = useState('');
     // to store a detailed description of the bid (ex: south side parking entrance pothole)
@@ -65,3 +65,5 @@ const BidUploadPage = () => {
       </div>
     );
 }
+
+export default Bids
