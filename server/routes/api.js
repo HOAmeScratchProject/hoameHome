@@ -8,4 +8,7 @@ router.get('/users', userController.getAllUsers, (req, res) => {
   res.status(200).json(res.locals.users);
 });
 
+router.post('/signup', userController.signup, (req,res)=>{
+  
+})
 module.exports = router;
