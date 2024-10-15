@@ -6,23 +6,25 @@ import Directory from './Directory';
 //import Documents from './Documents';
 import Bids from './Bids';
 
-const Dashboard = (onLogout) => { //hande signout
-    // state to track current active tab, defult is announements
+const Dashboard = ({onLogout}) => { //handle signout
+    // state to track current active tab, default is announcements
     // buttons to switch tabs, upon switching making them the active tab
-    const [activeTab, setActiveTab] = useState('annoucements');
-
-
-   const handleClick = (e) => {
-        // console.log(e.target.innerHTML)
-        const currentTab = e.target.innerHTML
-        setActiveTab(currentTab)
-    }
-
+    const [activeTab, setActiveTab] = useState('Announcements');
+    // const [users, setUsers] = useState([]);
+    
+    const handleClick = (e) => {
+         // console.log(e.target.innerHTML)
+         const currentTab = e.target.innerHTML
+         //getUsers();
+         setActiveTab(currentTab)
+     }
+    
     const handleOptions = (e) =>{
         console.log(e.target.value);
         setActiveTab(e.target.value)
     }
     
+            
     return (
         <div>
             <header>
