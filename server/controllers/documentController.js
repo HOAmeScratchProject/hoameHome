@@ -1,4 +1,4 @@
-const db = require('../models/hoameModels');
+const db = require('../models/hoameModels'); 
 
 const documentController = {};
 
@@ -25,3 +25,29 @@ documentController.getAllDocs = async (req, res, next) => {
     });
   }
 };
+
+// handles uploaded file & saves it to database:
+documentController.postUpload = async (req, res, next) => {
+    try {
+        //destrucure properties of req.file object provided by upload/multer() middleware in api.js route
+        const { originalname, mimetype, size, buffer } = req.file;
+        console.log('documentController.postUpload - Uploaded file: ', originalname, mimetype, size);
+        //DB Query.  content_type means MIME type means .pdf, .doc, .rtf, etc. 
+        const queryText = 'INSERT INTO files (filename, file_size, content_type, upload_time, file_data) VALUES ($1, $2, $3, NOW(), $4)';
+        // properties from multer's req.file
+        const values = [originalname, size, mimetype, buffer];
+        await db.query(queryText, values);
+        //set response (res.locals) to send back successful response
+        res.locals.upload = { message: 'File uploaded successfully', filename: originalname};
+        return next();
+    } catch (err) {
+        console.error('Error in documentController.postUpload: ', err);
+        return next({
+            log: 'Error in documentController.postUpload: ' + err,
+            status: 500,
+            message: { err: 'An error occurred while uploading the document. Please try again later.'},
+        })
+    }
+}
+
+module.exports = documentController
