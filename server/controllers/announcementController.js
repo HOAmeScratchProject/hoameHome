@@ -113,7 +113,7 @@ announcementController.getAllAnnouncements = async (req, res, next) => {
           return next ({
             log: 'Error in announcementController.deleteAnnouncements: ERROR: ' + err,
             status: 500,
-            message : { err : 'Error occured while deleting announcement'},
+            message : { err : 'Error occurred while deleting announcement'},
             });
         }
       }

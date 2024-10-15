@@ -30,20 +30,19 @@ router.post('/announcements', announcementController.createAnnouncements, (req, 
 // })
 
 /**
- *  ≈ documentController routes
- * In progress - BMA 
- * upload endpoint for calling multer upload.single('file') <-- argument must match name attribute set in HTML form that submits the file, followed by documentControllerUpload middleware to upload files to Db & then send a response back.
+ * documentController routes
+ * upload endpoint for calling multer upload.single('file') <-- argument must match name attribute set in HTML form that submits the file <--, followed by documentControllerUpload middleware to upload files to Db & then send a response back.
  */ 
 router.post('/upload', upload.single('file'), documentController.postUpload, (req, res) =>{
   console.log('from api.js - File uploaded and saved to database.');
   res.status(201).json(res.locals.upload);
 })
 
-// //On hold - BMA 10/14 @ 4:59pm
-// router.get('/viewDocs', documentController.getAllDocs, (req, res) => {
-  //   console.log('Hello from /viewDocs route in api.js"');
-  //   return res.status(200).json(res.locals.docs)
-  // })
+// Route to get documents from DB
+router.get('/getDocs', documentController.getAllDocs, (req, res) => {
+    console.log('Hello from /viewDocs route in api.js"');
+    return res.status(200).json(res.locals.docs)
+  })
   
   module.exports = router;
   
