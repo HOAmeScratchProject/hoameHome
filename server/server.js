@@ -7,6 +7,7 @@ const cors = require('cors');
 
 const PORT = 3000;
 
+app.use(cors());
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
@@ -22,9 +23,9 @@ app.use(
     allowedHeaders: [
       'Content-Type',
       'Authorization',
-      //   'Accept',
-      //   'Origin',
-      //   'X-Requested-With',
+        'Accept',
+        'Origin',
+        'X-Requested-With'
     ], // Defining allowed headers
   })
 );
