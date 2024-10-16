@@ -56,9 +56,32 @@ userController.signup = async (req, res, next) => {
 };
 
 userController.login = async (req, res, next) => {
+  let { username, password } = req.body;
+  try {
+    const loginString =
+      'SELECT username, password FROM users WHERE username = ($1)';
 
-  let 
-
+    let user = await db.query(loginString, [username]);
+    if (password === user.rows[0].password) {
+      console.log('login successful');
+      res.locals.login = true;
+    } else {
+      res.locals.login = false;
+      console.log('login not successful try again');
+    }
+    return next();
+  } catch (err) {
+    // Using console.error vs console.log to specifically log an error object for handling errors.
+    console.error('Error in userController.login.js: ', err);
+    return next({
+      log: `Error in userController.login ERROR:` + err,
+      status: 500, // Internal server error
+      // Message users see.
+      message: {
+        err: 'An error occurred logging in. Please try again later.',
+      },
+    });
+  }
 };
 
 module.exports = userController;

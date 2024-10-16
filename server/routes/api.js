@@ -2,6 +2,8 @@ const express = require('express');
 const userController = require('../controllers/userController');
 const documentController = require('../controllers/documentController');
 const announcementController = require('../controllers/announcementController');
+const cookieController = require('../controllers/cookieController.js');
+const sessionController = require('../controllers/sessionController.js');
 //require multer for /upload endpoint
 const multer = require('multer');
 const upload = multer();
@@ -13,13 +15,19 @@ router.get('/users', userController.getAllUsers, (req, res) => {
   res.status(200).json(res.locals.users);
 });
 // route to create user
-router.post('/signup', userController.signup, (req, res) => {
-  res.status(201).json(res.locals.account);
-});
+router.post(
+  '/signup',
+  userController.signup,
+  sessionController.startSession, //start a session an post to the database
+  cookieController.setCookie,
+  (req, res) => {
+    res.status(201).json(res.locals.account);
+  }
+);
 
 router.post('/login', userController.login, (req, res) => {
   res.status(200).json(res.locals.login);
-})
+});
 
 // route to get all announcements
 router.get(
@@ -37,11 +45,16 @@ router.post(
     res.status(201).json(res.locals.announcements);
   }
 );
+
 // route to delete announcement
-// router.delete('/announcements', announcementController.deleteAnnouncements, (req, res) =>{
-//   // console.log('Made it to response in api.js', res.locals.announcements )
-//  res.status(200).json(res.locals.deletedAnnouncement);
-// })
+router.delete(
+  '/announcements/:id',
+  announcementController.deleteAnnouncement,
+  (req, res) => {
+    // console.log('Made it to response in api.js', res.locals.announcements )
+    res.status(200).json(res.locals.deletedAnnouncement);
+  }
+);
 
 /**
  * documentController routes
@@ -63,6 +76,13 @@ router.get('/getDocs', documentController.getAllDocs, (req, res) => {
   return res.status(200).json(res.locals.docs);
 });
 
+router.delete(
+  '/deleteDoc/:id',
+  documentController.deleteDocument,
+  (req, res) => {
+    return res.status(200).json(res.locals.deletedDoc);
+  }
+);
 module.exports = router;
 
 // Commenting out for now, using announcementController.createAnnouncements instead.
