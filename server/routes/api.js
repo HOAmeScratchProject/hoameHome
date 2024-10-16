@@ -13,17 +13,18 @@ router.get('/users', userController.getAllUsers, (req, res) => {
  res.status(200).json(res.locals.users);
 });
 // route to create user
-router.post('/signup', userController.signup, (req,res)=>{
-})
+router.post('/signup', userController.signup, (req, res)=>{
+  res.status(201).json({message:'User created successfully'});
+});
 // route to get all announcements
-router.get('/announcements', announcementController.getAllAnnouncements, (req, res) =>{
- res.status(200).json(res.locals.announcements);
-})
+router.get('/announcements', announcementController.getAllAnnouncements)
 // route to create announcement
-router.post('/announcements', announcementController.createAnnouncements, (req, res) =>{
- res.status(201).json(res.locals.announcements);
-})
+router.post('/announcements', announcementController.createAnnouncements)
+
 // route to delete announcement
+router.delete("/announcements/:id", announcementController.deleteAnnouncement);
+
+
 // router.delete('/announcements', announcementController.deleteAnnouncements, (req, res) =>{
 //   // console.log('Made it to response in api.js', res.locals.announcements )
 //  res.status(200).json(res.locals.deletedAnnouncement);
