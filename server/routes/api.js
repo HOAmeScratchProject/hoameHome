@@ -24,10 +24,10 @@ router.post('/announcements', announcementController.createAnnouncements, (req, 
  res.status(201).json(res.locals.announcements);
 })
 // route to delete announcement
-// router.delete('/announcements', announcementController.deleteAnnouncements, (req, res) =>{
-//   // console.log('Made it to response in api.js', res.locals.announcements )
-//  res.status(200).json(res.locals.deletedAnnouncement);
-// })
+router.delete('/announcements', announcementController.deleteAnnouncements, (req, res) =>{
+  // console.log('Made it to response in api.js', res.locals.announcements )
+ res.status(200).json(res.locals.deletedAnnouncement);
+})
 
 /**
  * documentController routes
