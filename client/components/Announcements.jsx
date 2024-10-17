@@ -52,19 +52,27 @@ const Announcements = () => {
       console.log("Raw response:", responseText);
 
       if (response.ok) {
-        const newAnnouncement = responseText ? JSON.parse(responseText) : null;
+        // Fetch announcements again to ensure the latest list is loaded
+        getAnnouncements();
+        //clear feilds and error after succesful post
+        setNewTitle('');
+        setNewMessage('');
+        setError('');
 
-        if (newAnnouncement) {
-          setAnnouncements([newAnnouncement, ...announcements]);
+        // const newAnnouncement = responseText ? JSON.parse(responseText) : null;
 
-          // clear fields and error
-          setNewTitle("");
-          setNewMessage("");
-        } else {
-          console.log("no content on response");
-        }
+        // if (newAnnouncement) {
+        //   setAnnouncements([newAnnouncement, ...announcements]);
+
+        //   // clear fields and error
+        //   setNewTitle("");
+        //   setNewMessage("");
+        // } else {
+        //   console.log("no content on response");
+        // }
       } else {
         console.log("Failed to post new Announcment");
+        setError('Failed t post new annoucement, try again');
       }
 
       // update announcement stat to add new announcement(""""
