@@ -67,7 +67,7 @@ router.get(
 // route to create announcement
 router.post(
   '/announcements',
-  sessionController.isAuthenticated
+  sessionController.isAuthenticated,
   announcementController.createAnnouncements,
   (req, res) => {
     res.status(201).json(res.locals.announcements);
@@ -77,7 +77,7 @@ router.post(
 // route to delete announcement
 router.delete(
   '/announcements/:id',
-  sessionController.isAuthenticated
+  sessionController.isAuthenticated,
   announcementController.deleteAnnouncement,
   (req, res) => {
     // console.log('Made it to response in api.js', res.locals.announcements )
