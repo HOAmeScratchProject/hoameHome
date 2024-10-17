@@ -8,6 +8,15 @@ cookieController.setCookie = (req, res, next) => {
   return next();
 };
 
+cookieController.setSSIDCookie = (req, res, next) => {
+  console.log("RES LOCALS USERID", res.locals.account.id.toString())
+  res.cookie('ssid', res.locals.user._id.toString(), {
+    httpOnly: true,
+    secure: true
+  });
+  return next()
+}
+
 module.exports = cookieController;
 
 // // --> Stretch - if time allows --->  Set SSID (Session ID) Cookie
