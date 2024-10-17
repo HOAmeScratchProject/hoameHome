@@ -46,6 +46,7 @@ const Documents = () => {
       console.error('error fetching documents', error);
     }
   };
+  use;
 
   return (
     <div>

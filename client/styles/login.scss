@@ -1,7 +1,45 @@
+$primary-color: #f45866; //primary actions and buttons
+$secondary-color: #a2666f; //for backgrounds, secondary actions or less prominent elements
+$tertiary-color: #c45ab3; //Use for highlights, links, or accent elements
+$fourth-color: #631a86; // Use for jeaders, titles and emphasis especially for text
+$fifth-color: #f49390; //Use this for subtle backgrounds or as a hover effect
+
 .loginComponent {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: auto;
+  padding: 3em;
+  border-radius: 10px;
+  border: 1px solid hsl(0, 0%, 75%);
+  box-shadow: 5px 5px 5px hsl(0, 0%, 75%);
+}
+.loginPrompt {
+  width: 15em;
+  border: 1px solid hsl(0, 0%, 75%);
+  border-radius: 5px;
+  padding: 1em;
+  margin-bottom: 5px;
+}
+
+.mantra {
+  display: flex;
+  justify-content: center;
+  color: grey;
+}
+
+.loginButton {
+  display: flex;
+  gap: 1em;
+  margin-top: 3em;
+  justify-content: center;
+}
+.loginButton1 {
+  padding: 0.75em 1.5em; /* Adjust padding for buttons */
+  border: none; /* Optional: Remove border */
+  background-color: $tertiary-color;
+  color: white;
+  cursor: pointer; /* Pointer cursor for buttons */
+  border-radius: 5px; /* Optional: Round the button edges */
 }
