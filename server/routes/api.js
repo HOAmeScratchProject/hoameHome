@@ -108,6 +108,7 @@ router.get(
   return res.status(200).json(res.locals.docs);
 });
 
+//delete a document from the database
 router.delete(
   '/deleteDoc/:id',
   documentController.deleteDocument,
