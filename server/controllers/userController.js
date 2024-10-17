@@ -59,12 +59,13 @@ userController.login = async (req, res, next) => {
   let { username, password } = req.body;
   try {
     const loginString =
-      'SELECT username, password FROM users WHERE username = ($1)';
+      'SELECT id, username, password FROM users WHERE username = ($1)';
 
-    let user = await db.query(loginString, [username]);
+    const user = await db.query(loginString, [username]);
     if (password === user.rows[0].password) {
-      console.log('login successful');
+      console.log('login successful', user.rows[0]);
       res.locals.login = true;
+      res.locals.account = user.rows;
     } else {
       res.locals.login = false;
       console.log('login not successful try again');
@@ -83,5 +84,25 @@ userController.login = async (req, res, next) => {
     });
   }
 };
+
+// userController.verifyUser = async (req, res, next) => {
+//   const { username, password } = req.body;
+
+//   if (!username || !password) return res.redirect('/signup');
+
+//   try {
+//     const findUserString =
+//       'SELECT * from users WHERE username=$1 AND password=$2';
+
+//     const findUser = await db.query(findUserString, [username, password]);
+//     if (password === user.rows[0].password) {
+//       console.log('login successful');
+//       res.locals.user = findUser.rows;
+//       return next ()
+//     }
+//   } catch (err) {
+//     return next(`Error in userController.verifyUser: ${err}`);
+//   }
+// }
 
 module.exports = userController;

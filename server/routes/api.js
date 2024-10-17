@@ -11,24 +11,51 @@ const upload = multer();
 const router = express.Router();
 
 // route to get all users
-router.get('/users', userController.getAllUsers, (req, res) => {
+router.get(
+  '/users', 
+  userController.getAllUsers, 
+  (req, res) => {
   res.status(200).json(res.locals.users);
 });
+
 // route to create user
 router.post(
   '/signup',
   userController.signup,
   sessionController.startSession, //start a session an post to the database
-  cookieController.setCookie,
+  cookieController.setCookie, 
   (req, res) => {
     res.status(201).json(res.locals.account);
   }
 );
-
-router.post('/login', userController.login, (req, res) => {
+// route to login
+router.post(
+  '/login', 
+  userController.login, 
+  sessionController.startSession, // start session after good login
+  cookieController.setCookie, // set cookie after session creation
+  (req, res) => {
   res.status(200).json(res.locals.login);
 });
 
+// route to check if user is authenticated
+router.get( 
+  '/auth/check',
+  sessionController.isAuthenticated,
+  (req, res) => {
+    res.status(200).json({message: 'User is authenticated.'});
+  }
+);
+// route to logout(end session)
+router.post( 
+  '/logout',
+  sessionController.isAuthenticated,
+  sessionController.endSession,
+  (req, res) => {
+    res.clearCookie('ssid');
+    res.status(200).json({message: 'Logged out successful'});
+  }
+);
 // route to get all announcements
 router.get(
   '/announcements',
@@ -40,6 +67,7 @@ router.get(
 // route to create announcement
 router.post(
   '/announcements',
+  sessionController.isAuthenticated,
   announcementController.createAnnouncements,
   (req, res) => {
     res.status(201).json(res.locals.announcements);
@@ -49,6 +77,7 @@ router.post(
 // route to delete announcement
 router.delete(
   '/announcements/:id',
+  sessionController.isAuthenticated,
   announcementController.deleteAnnouncement,
   (req, res) => {
     // console.log('Made it to response in api.js', res.locals.announcements )
@@ -71,7 +100,10 @@ router.post(
 );
 
 // Route to get documents from DB
-router.get('/getDocs', documentController.getAllDocs, (req, res) => {
+router.get(
+  '/getDocs', 
+  documentController.getAllDocs, 
+  (req, res) => {
   console.log('Hello from /viewDocs route in api.js"');
   return res.status(200).json(res.locals.docs);
 });
