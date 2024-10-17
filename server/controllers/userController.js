@@ -64,7 +64,7 @@ userController.login = async (req, res, next) => {
     let user = await db.query(loginString, [username]);
     if (password === user.rows[0].password) {
       console.log('login successful');
-      res.locals.login = true;
+      res.locals.login = true;  // /////// front end expecting true or false response regarding login
     } else {
       res.locals.login = false;
       console.log('login not successful try again');

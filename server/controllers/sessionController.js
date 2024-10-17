@@ -25,3 +25,5 @@ sessionController.startSession = async (req, res, next) => {
 };
 
 module.exports = sessionController;
+
+// Stretch if time allows --> To support SSIDCookie, look to see if a session exists, if not create one.

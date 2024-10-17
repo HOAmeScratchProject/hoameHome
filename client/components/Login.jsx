@@ -7,7 +7,7 @@ const Login = () => {
   // handle form submission and submist logic
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent refresh on submit
-
+// ///// Add try block fetching to /login endpoing/route sending a POST request object including method: POST, headers: application/json and body passing username & password. If true response in returned data, activate isLoggedIn setter function passed as props from App.js to true.
     if (username === 'user' && password === 'password') {
       onLoginSucess(); // call parent func if login is right
     } else {

@@ -85,6 +85,21 @@ router.delete(
 );
 module.exports = router;
 
+// // -- Stretcth --  Create secure session id before starting session
+// router.post(
+//   '/signup',
+//   userController.signup,
+//   cookieController.setSSIDCookie,  //Set secure session ID cookie
+//   sessionController.startSession, //start a session and post to the database
+//   (req, res) => {
+//     res.status(201).json(res.locals.account);
+//   }
+// );
+
+
+
+
+
 // Commenting out for now, using announcementController.createAnnouncements instead.
 // router.post('/announcements',
 //   announcementController.postAnnouncement,
