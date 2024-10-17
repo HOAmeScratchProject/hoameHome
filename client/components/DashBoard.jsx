@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Announcements from './Announcements';
 import Directory from './Directory';
 //import BidsQuotes from './BidsQuotes';
-//import Documents from './Documents';
+import Documents from './Documents';
 import Bids from './Bids';
 
 const Dashboard = ({ onLogout }) => {
@@ -40,6 +40,7 @@ const Dashboard = ({ onLogout }) => {
           Announcements
         </button>
         <select onChange={handleOptions} className='select'>
+          <option value='Announcement'>Select Tab</option>
           <option value='Documents'>Documents</option>
           <option value='MeetingMinutes'>Meeting Minutes</option>
           <option value='Bids'>Bids/Quotes</option>
