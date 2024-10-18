@@ -59,9 +59,15 @@ userController.login = async (req, res, next) => {
   let { username, password } = req.body;
   try {
     const loginString =
-      'SELECT id, username, password FROM users WHERE username = ($1)';
-
-    const user = await db.query(loginString, [username]);
+      'SELECT id, username, password FROM users WHERE username = $1';
+    // store as lowercase fir ease
+    const user = await db.query(loginString, [username.toLowerCase()]);
+    // check for no user found and if no user then login failure and en
+    if(user.rowCount === 0) {
+      res.locals.login = false;
+    return res.status(401).json ({ message:'Invalid username or password'});
+    }
+    // compare password to hashed password in db
     if (password === user.rows[0].password) {
       console.log('login successful', user.rows[0]);
       res.locals.login = true;

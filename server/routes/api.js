@@ -4,6 +4,7 @@ const documentController = require('../controllers/documentController');
 const announcementController = require('../controllers/announcementController');
 const cookieController = require('../controllers/cookieController.js');
 const sessionController = require('../controllers/sessionController.js');
+const bidController = require('../controllers/bidController.js');
 //require multer for /upload endpoint
 const multer = require('multer');
 const upload = multer();
@@ -115,6 +116,13 @@ router.delete(
   (req, res) => {
     return res.status(200).json(res.locals.deletedDoc);
   }
+);
+
+// route for file upload
+router.post(
+  '/upload',
+  bidControllerr.uploadFile,
+  bidControllerr.handleFileUpload
 );
 module.exports = router;
 
