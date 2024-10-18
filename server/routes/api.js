@@ -124,6 +124,13 @@ router.delete(
     return res.status(200).json(res.locals.deletedDoc);
   }
 );
+
+// route for file upload
+router.post(
+  '/upload',
+  bidControllerr.uploadFile,
+  bidControllerr.handleFileUpload
+);
 module.exports = router;
 
 // Commenting out for now, using announcementController.createAnnouncements instead.
