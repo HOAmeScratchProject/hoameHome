@@ -1,12 +1,12 @@
 import React from 'react';
-const MessageCard = ({message, datetime, title})=>{
-    return(
-        <div className='messageCard'>
-          <h2>{title}</h2>
-          <p>{datetime}</p>
-          <p>{message}</p>
-        </div>
-    )
-}
+const MessageCard = ({ message, datetime, title }) => {
+  return (
+    <>
+      <h2 className='messageTitle'>{title}</h2>
+      <p>{message}</p>
+      <p>{datetime}</p>
+    </>
+  );
+};
 
 export default MessageCard;
