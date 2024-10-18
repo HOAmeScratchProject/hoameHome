@@ -57,7 +57,7 @@ const Login = ({ onLogin }) => {
         />
         <div className='loginButton'>
           <button onClick={handleLogin} type='submit' className='loginButton1'>
-            Next
+            Login
           </button>
 
           <button

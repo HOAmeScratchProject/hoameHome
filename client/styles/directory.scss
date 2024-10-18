@@ -5,5 +5,19 @@ $fourth-color: #631a86; // Use for jeaders, titles and emphasis especially for t
 $fifth-color: #f49390; //Use this for subtle backgrounds or as a hover effect
 
 .memberCard {
-  border: 1px solid $secondary-color;
+  flex: 1 1 calc(33.333% - 10px);
+  padding: 1em;
+  background-color: white;
+  border: 2px solid hsl(0, 0%, 75%);
+  margin: 5px;
+  box-shadow: 3px 3px 3px hsl(0, 0%, 75%);
+  border-radius: 6px;
+  width: 18rem;
+  box-sizing: border-box;
+}
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to the next row */
+  gap: 10px; /* Space between the cards */
+  justify-content: space-between; /* Distributes space between the cards */
 }

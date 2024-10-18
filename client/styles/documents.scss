@@ -4,17 +4,18 @@ $tertiary-color: #c45ab3; //Use for highlights, links, or accent elements
 $fourth-color: #631a86; // Use for jeaders, titles and emphasis especially for text
 $fifth-color: #f49390; //Use this for subtle backgrounds or as a hover effect
 
-html {
-  font-family: 'Veranda', sans-serif;
-}
-.pageTitle {
-  display: flex;
-  color: $fourth-color;
-  font-size: 30px;
-  justify-content: center;
-  margin: 0px;
+.documentCard {
+  padding: 1em;
+  border-bottom: 1px solid hsl(0, 0%, 75%);
 }
 
-button {
+.viewButton {
+  margin-left: auto; /* Push the button to the right */
+  padding: 0.5em 1em; /* Add padding for the button */
+  background-color: $primary-color; /* Use your primary color */
+  color: white; /* Text color */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
   transition: background-color 0.3s ease;
 }
