@@ -9,7 +9,7 @@ const Announcements = () => {
   const [error, setError] = useState('');
 
   const getAnnouncements = async () => {
-    console.log('get messages is working!!');
+    // console.log('get messages is working!!');
     try {
       const response = await fetch(`http://localhost:3000/api/announcements`);
       const data = await response.json();
@@ -103,51 +103,57 @@ const Announcements = () => {
   return (
     <div>
       <h1>Announcements</h1>
-
       {/* form to add new announcement */}
-      <form onSubmit={postMessage}>
-        <input
-          type='text'
-          placeholder='Title'
-          value={newTitle}
-          className='titleInput'
-          onChange={(e) => setNewTitle(e.target.value)}
-        />
-        <textarea
-          placeholder='Message'
-          value={newMessage}
-          className='messageArea'
-          onChange={(e) => setNewMessage(e.target.value)}
-        />
-        <button type='submit' className='submitButton'>
-          Submit
-        </button>
-      </form>
+      <div className='announcementsBar'>
+        <form onSubmit={postMessage}>
+          <input
+            type='text'
+            placeholder='Title'
+            value={newTitle}
+            className='titleInput'
+            onChange={(e) => setNewTitle(e.target.value)}
+          />
+          <textarea
+            placeholder='Message'
+            value={newMessage}
+            className='messageArea'
+            onChange={(e) => setNewMessage(e.target.value)}
+          />
+          <button type='submit' className='submitButton'>
+            Submit
+          </button>
+        </form>
+      </div>
 
       {/* display error */}
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {/* loading state of announcements */}
-      {loading ? (
-        <p>Loading Announcements...</p>
-      ) : announcements.length > 0 ? (
-        announcements.map((announcement) => (
-          <div key={announcement.id}>
-            {/* display message with MessageCard */}
-            <MessageCard
-              title={announcement.title}
-              message={announcement.message}
-              datetime={announcement.datetime}
-            />
-            {/* delete button for each announcement */}
-            <button onClick={() => deleteAnnouncement(announcement.id)}>
-              Delete
-            </button>
-          </div>
-        ))
-      ) : (
-        <p>No announcements found.</p>
-      )}
+      <div className='messageWindow'>
+        {loading ? (
+          <p>Loading Announcements...</p>
+        ) : announcements.length > 0 ? (
+          announcements.map((announcement) => (
+            <div key={announcement.id} className='messageCard'>
+              {/* display message with MessageCard */}
+              <MessageCard
+                title={announcement.title}
+                message={announcement.message}
+                datetime={announcement.datetime}
+              />
+              {/* delete button for each announcement */}
+              <button
+                onClick={() => deleteAnnouncement(announcement.id)}
+                className='deleteButton'
+              >
+                Delete
+              </button>
+            </div>
+          ))
+        ) : (
+          <p>No announcements found.</p>
+        )}
+      </div>
     </div>
   );
 };
