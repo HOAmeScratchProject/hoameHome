@@ -1,0 +1,64 @@
+$primary-color: #f45866; //primary actions and buttons
+$secondary-color: #a2666f; //for backgrounds, secondary actions or less prominent elements
+$tertiary-color: #c45ab3; //Use for highlights, links, or accent elements
+$fourth-color: #631a86; // Use for jeaders, titles and emphasis especially for text
+$fifth-color: #f49390; //Use this for subtle backgrounds or as a hover effect
+
+.dashboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  font-family: 'Veranda', sans-serif;
+  height: 100%;
+  margin: 0px;
+  color: grey;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Make header take full width */
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-around; /* Space out the buttons evenly */
+  width: 100%; /* Make navigation take full width */
+  margin-bottom: 1em; /* Add some space below the navigation */
+  display: flex;
+  gap: 1em;
+  margin-top: 3em;
+  justify-content: center;
+}
+
+.tab {
+  padding: 1.5em; /* Adjust padding for buttons */
+  border: none; /* Optional: Remove border */
+  background-color: $tertiary-color;
+  color: white;
+  width: 300px;
+  cursor: pointer; /* Pointer cursor for buttons */
+  border-radius: 20px; /* Optional: Round the button edges */
+}
+
+.tab:hover {
+  background-color: $fourth-color;
+}
+.select {
+  padding: 1.5em;
+  border: none;
+  background-color: $tertiary-color;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 200px;
+  text-align: center;
+}
+
+.window {
+  border: 5px solid $tertiary-color;
+  border-radius: 10px;
+  padding: 1em;
+  width: 95%;
+}

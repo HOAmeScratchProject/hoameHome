@@ -5,6 +5,7 @@ const apiRouter = require('./routes/api');
 const cookieParser = require('cookie-parser') //Using later on make sure to install
 const cors = require('cors');
 
+
 const PORT = 3000;
 
 app.use(cors());
