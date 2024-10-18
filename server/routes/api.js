@@ -4,6 +4,9 @@ const documentController = require('../controllers/documentController');
 const announcementController = require('../controllers/announcementController');
 const cookieController = require('../controllers/cookieController.js');
 const sessionController = require('../controllers/sessionController.js');
+//const roleController = require("./server/controllers/roleController");
+const roleController = require("../controllers/roleController");
+
 //require multer for /upload endpoint
 const multer = require('multer');
 const upload = multer();
@@ -66,8 +69,11 @@ router.get(
 );
 // route to create announcement
 router.post(
-  '/announcements',
+  "/announcements",
   sessionController.isAuthenticated,
+  // Only 'admin' and 'owner' can create
+  //roleController.checkPermissions(["admin", "owner"]),
+  roleController.checkPermissions(["admin"]),
   announcementController.createAnnouncements,
   (req, res) => {
     res.status(201).json(res.locals.announcements);
@@ -76,8 +82,10 @@ router.post(
 
 // route to delete announcement
 router.delete(
-  '/announcements/:id',
+  "/announcements/:id",
   sessionController.isAuthenticated,
+  // Only 'admin' can delete
+  roleController.checkPermissions(["admin"]),
   announcementController.deleteAnnouncement,
   (req, res) => {
     // console.log('Made it to response in api.js', res.locals.announcements )
