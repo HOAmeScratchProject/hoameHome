@@ -4,6 +4,7 @@ import './styles/main.scss';
 import './styles/directory.scss';
 import './styles/announcements.scss';
 import './styles/login.scss';
+import './styles/dashboard.scss';
 const root = createRoot(document.getElementById('root'));
 
 root.render(<App />);

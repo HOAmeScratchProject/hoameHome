@@ -1,29 +1,13 @@
-$primary-color: #E0479E;
-$secondary-color:#553E4E;
-$tertiary-color:#FFAFC5;
-$fourth-color:#FFCFD2;
-html{
-    font-family:'Kristen ITC', cursive;
-    color:$secondary-color;
-}
+$primary-color: #f45866; //primary actions and buttons
+$secondary-color: #a2666f; //for backgrounds, secondary actions or less prominent elements
+$tertiary-color: #c45ab3; //Use for highlights, links, or accent elements
+$fourth-color: #631a86; // Use for jeaders, titles and emphasis especially for text
+$fifth-color: #f49390; //Use this for subtle backgrounds or as a hover effect
 
-.tab {
-    padding:0.5em;
-    background-color:$fourth-color;
-    border-radius: 5px;
-    border:1px solid $tertiary-color;
-    box-shadow: 5px 0px 6px hsl(0, 10%, 70%);
-}
-
-.select {
-    padding:0.5em;
-    background-color: $fourth-color;
-    border-radius: 5px;
-    border:1px solid $tertiary-color;
-    margin:10px;
-    box-shadow: 5px 0px 6px hsl(0, 10%, 70%);
-}
-
-.window {
-    border: 1px solid
+.pageTitle {
+  display: flex;
+  color: $fourth-color;
+  font-size: 30px;
+  justify-content: center;
+  margin: 0px;
 }
