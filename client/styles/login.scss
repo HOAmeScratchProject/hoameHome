@@ -4,6 +4,20 @@ $tertiary-color: #c45ab3; //Use for highlights, links, or accent elements
 $fourth-color: #631a86; // Use for jeaders, titles and emphasis especially for text
 $fifth-color: #f49390; //Use this for subtle backgrounds or as a hover effect
 
+.loginBody {
+  font-family: 'Veranda', sans-serif;
+  height: 100%;
+  margin: 0;
+}
+
+.loginBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
 .loginComponent {
   display: flex;
   flex-direction: column;
@@ -36,10 +50,15 @@ $fifth-color: #f49390; //Use this for subtle backgrounds or as a hover effect
   justify-content: center;
 }
 .loginButton1 {
-  padding: 0.75em 1.5em; /* Adjust padding for buttons */
-  border: none; /* Optional: Remove border */
+  padding: 0.75em 1.5em;
+  border: none;
   background-color: $tertiary-color;
   color: white;
-  cursor: pointer; /* Pointer cursor for buttons */
-  border-radius: 5px; /* Optional: Round the button edges */
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.loginButton1:hover {
+  cursor: pointer;
+  background-color: $fourth-color;
 }

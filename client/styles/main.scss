@@ -3,40 +3,6 @@ $secondary-color: #a2666f; //for backgrounds, secondary actions or less prominen
 $tertiary-color: #c45ab3; //Use for highlights, links, or accent elements
 $fourth-color: #631a86; // Use for jeaders, titles and emphasis especially for text
 $fifth-color: #f49390; //Use this for subtle backgrounds or as a hover effect
-html,
-body {
-  font-family: 'Veranda', sans-serif;
-  height: 100%;
-  margin: 0;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.tab {
-  padding: 0.5em;
-  background-color: $fourth-color;
-  border-radius: 5px;
-  border: 1px solid $tertiary-color;
-  box-shadow: 5px 0px 6px hsl(0, 10%, 70%);
-}
-
-.select {
-  padding: 0.5em;
-  background-color: $fourth-color;
-  border-radius: 5px;
-  border: 1px solid $tertiary-color;
-  margin: 10px;
-  box-shadow: 5px 0px 6px hsl(0, 10%, 70%);
-}
-
-.window {
-  border: 1px solid;
-}
 
 .pageTitle {
   display: flex;

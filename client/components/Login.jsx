@@ -36,7 +36,7 @@ const Login = ({ onLogin }) => {
   // };
 
   return (
-    <div>
+    <div className='loginBody'>
       <div className='loginComponent'>
         <h2 className='pageTitle'>HOAme</h2>
         <p className='mantra'>You're almost hoame</p>
