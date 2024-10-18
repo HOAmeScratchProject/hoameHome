@@ -11,7 +11,7 @@ const Bids = () => {
   //to store the uploaded file (ex: pdf or image)
   const [file, setFile] = useState(null);
   // File upload successful
-  const [isUploaded, setIsUploaded] = useState[False];
+  const [isUploaded, setIsUploaded] = useState(false);
 
   // stores the first file from input in the file state
   const selectFile = (event) => {
@@ -46,53 +46,54 @@ const Bids = () => {
 
   return (
     <div>
-      {isUploaded ? (<h1>Upload Success! Go to Documents to view downloads</h1>
+      {isUploaded ? (
+        <h1>Upload Success! Go to Documents to view downloads</h1>
       ) : (
         <>
-      <h1>Submit a Bid/Quote</h1>
-      <form>
-        <div>
-          <label>Title:</label>
-          {/* //when input changes use setTitle to update title state */}
-          <input
-            type='text'
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Description:</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Amount:</label>
-          <input
-            type='number'
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Upload Quote (PDF/Image):</label>
-          <input
-            type='file'
-            onChange={selectFile}
-            accept='application/pdf, image/*'
-            required
-          />
-        </div>
-        <button onClick={handleFileSubmit} type='submit'>
-          Submit Bid
-        </button>
-      </form>
+          <h1>Submit a Bid/Quote</h1>
+          <form>
+            <div>
+              <label>Title:</label>
+              {/* //when input changes use setTitle to update title state */}
+              <input
+                type='text'
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label>Description:</label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label>Amount:</label>
+              <input
+                type='number'
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label>Upload Quote (PDF/Image):</label>
+              <input
+                type='file'
+                onChange={selectFile}
+                accept='application/pdf, image/*'
+                required
+              />
+            </div>
+            <button onClick={handleFileSubmit} type='submit'>
+              Submit Bid
+            </button>
+          </form>
+        </>
       )}
-      </>
     </div>
   );
 };
