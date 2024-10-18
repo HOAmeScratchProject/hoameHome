@@ -1,4 +1,7 @@
 const db = require('../models/hoameModels.js');
+//const roleController = require("./server/controllers/roleController");
+const roleController = require("../controllers/roleController");
+
 
 const userController = {};
 
@@ -63,9 +66,11 @@ userController.login = async (req, res, next) => {
 
     const user = await db.query(loginString, [username]);
     if (password === user.rows[0].password) {
-      console.log('login successful', user.rows[0]);
+      console.log("login successful", user.rows[0]);
+      const userId = user.rows[0].id;
+      const roles = await roleController.getUserRoles(userId); // Fetch roles
       res.locals.login = true;
-      res.locals.account = user.rows;
+      res.locals.account = { ...user.rows[0], roles };
     } else {
       res.locals.login = false;
       console.log('login not successful try again');
