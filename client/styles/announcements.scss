@@ -1,7 +1,86 @@
-$primary-color: #E0479E;
-$secondary-color:#553E4E;
-$tertiary-color:#FFAFC5;
-$fourth-color:#FFCFD2;
-.messageCard{
-    border: 1px solid $secondary-color;
+$primary-color: #f45866; //primary actions and buttons
+$secondary-color: #a2666f; //for backgrounds, secondary actions or less prominent elements
+$tertiary-color: #c45ab3; //Use for highlights, links, or accent elements
+$fourth-color: #631a86; // Use for jeaders, titles and emphasis especially for text
+$fifth-color: #f49390; //Use this for subtle backgrounds or as a hover effect
+.announcementsBar {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 1em;
+}
+.messageWindow {
+  height: 40vh;
+  border: 2px solid $tertiary-color;
+  border-radius: 20px;
+  padding: 1rem;
+  overflow-y: auto;
+}
+.messageCard {
+  padding: 1em;
+  margin-bottom: 5px;
+  border: 4px solid hsl(0, 0%, 75%);
+  border-radius: 30px;
+}
+.messageTitle {
+  color: $fourth-color;
+}
+.titleInput,
+.messageArea {
+  width: 100%;
+  padding: 1em;
+  border-radius: 20px;
+  border: 2px solid hsl(0, 0%, 75%);
+  margin-bottom: 1em;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.titleInput {
+  color: $fourth-color;
+  font-size: 20px;
+  font-weight: bold;
+}
+.messageArea {
+  resize: none;
+  height: 50px;
+  font-family: 'Veranda', sans-serif;
+}
+
+.deleteButton {
+  width: 100%;
+  padding: 1.5em;
+  border: none;
+  background-color: $primary-color;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  width: 100%;
+  margin-bottom: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.submitButton {
+  width: 100%;
+  padding: 1.5em;
+  border: none;
+  background-color: $fourth-color;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  width: 100%;
+  margin-bottom: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: $secondary-color;
+}
+
+form {
+  flex: 1;
+  max-width: none;
+  padding: 1em;
+  box-sizing: border-box;
 }

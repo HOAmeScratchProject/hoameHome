@@ -29,13 +29,13 @@ const Dashboard = ({ onLogout }) => {
   };
 
   return (
-    <div>
+    <div className='dashboard'>
       <header>
-        <h1>Welcome HOAme Brian!</h1>
+        <h1 className='pageTitle'>Welcome HOAme Brian!</h1>
         <button onClick={handleLogout}>Sign Out</button>
       </header>
 
-      <nav>
+      <nav className='navigation'>
         <button className='tab' onClick={handleClick}>
           Announcements
         </button>

@@ -36,31 +36,38 @@ const Login = ({ onLogin }) => {
   // };
 
   return (
-    <div>
-      <h2> Your're Almost HOAme! </h2>
+    <div className='loginBody'>
       <div className='loginComponent'>
+        <h2 className='pageTitle'>HOAme</h2>
+        <p className='mantra'>You're almost hoame</p>
         <input
           type='text'
           placeholder='Username'
           value={username}
+          className='loginPrompt'
           onChange={(e) => setUsername(e.target.value)}
         />
 
         <input
           type='password'
           placeholder='Password'
+          className='loginPrompt'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <div className='loginButton'>
+          <button onClick={handleLogin} type='submit' className='loginButton1'>
+            Login
+          </button>
 
-        <button onClick={handleLogin} type='submit'>
-          Login
-        </button>
-
-        <button onClick={() => alert('Google login clicked')}>
-          {' '}
-          Login with Google{' '}
-        </button>
+          <button
+            onClick={() => alert('Google login clicked')}
+            className='loginButton1'
+          >
+            {' '}
+            Login with Google{' '}
+          </button>
+        </div>
       </div>
     </div>
   );
