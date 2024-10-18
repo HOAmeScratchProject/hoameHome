@@ -125,12 +125,12 @@ router.delete(
   }
 );
 
-// route for file upload
-router.post(
-  '/upload',
-  bidControllerr.uploadFile,
-  bidControllerr.handleFileUpload
-);
+// route for file upload.   --- Not in use
+// router.post(
+//   '/upload',
+//   bidControllerr.uploadFile,
+//   bidControllerr.handleFileUpload
+// );
 module.exports = router;
 
 // // -- Stretcth --  Create secure session id before starting session
