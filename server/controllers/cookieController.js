@@ -1,72 +1,42 @@
 const cookieController = {};
 
-/**
- * setCookie - set a cookie
+/*
+ * Manages setting cookies and SSID and makes sure they expire in 1 hr
  */
-// cookieController.setCookie = (req, res, next) => {
-//   res.cookie('sessionId', res.locals.session.id);
-//   return next();
-// };
 
-// cookieController.setSSIDCookie = (req, res, next) => {
-//   console.log("RES LOCALS USERID", res.locals.account.id.toString())
-//   res.cookie('ssid', res.locals.user._id.toString(), {
-//     httpOnly: true,
-//     secure: true
-//   });
-//   return next()
-// }
-
-/**
- * setCookie - set a session cookie (for any session-specific cookies)
- */
-// cookieController.setCookie = (req, res, next) => {
-  
-//   //  'ssid' is our primary session identifier
-//   console.log('Setting Cookie')
-//   res.cookie("ssid", res.locals.session.id, {
-//     httpOnly: true,
-//     secure: true, // set secure to false for local development,Use 'true' only if served over HTTPS
-//     maxAge: 60 * 60 * 1000, // 1 hour
-//   });
-//   console.log("Cookie set: ", res.locals.session.id);
-//   return next();
-// };
-
+// function to set session cookie to track user
 cookieController.setCookie = (req, res, next) => {
-  // Check if session and session ID exist in res.locals
+  // check if session and session ID exist in res.locals
   if (!res.locals.session || !res.locals.session.id) {
-    console.error("Session ID missing from res.locals");
+    console.error('Session ID missing from res.locals');
     return next({
-      log: "Error: Session ID missing in cookieController.setCookie",
+      log: 'Error: Session ID missing in cookieController.setCookie',
       status: 500,
-      message: { err: "An error occurred while setting the session cookie." },
+      message: { err: 'An error occurred while setting the session cookie.' },
     });
   }
 
-  //  'ssid' is our primary session identifier
-  console.log("Setting Cookie for session ID:", res.locals.session.id);
-  res.cookie("ssid", res.locals.session.id, {
+  // set 'ssid' as our primary session identifier
+  console.log('Setting Cookie for session ID:', res.locals.session.id);
+  res.cookie('ssid', res.locals.session.id, {
     httpOnly: true,
     secure: false, // set secure to true if using HTTPS
     maxAge: 60 * 60 * 1000, // 1 hour
   });
 
-  console.log("Cookie set successfully: ", res.locals.session.id);
+  console.log('Cookie set successfully: ', res.locals.session.id);
   return next();
 };
 
-
-/**
- * setSSIDCookie - set an SSID (Session ID) cookie specifically for user session tracking
- */
+// funciton to set an SSID to track user through account id
 cookieController.setSSIDCookie = (req, res, next) => {
-  console.log('setting SSIDcookie')
-  // Ensure that res.locals.account exists and is properly set
+  console.log('setting SSIDcookie');
+  // check res.locals.account exists and is set
   if (res.locals.account && res.locals.account[0] && res.locals.account[0].id) {
     const userId = res.locals.account[0].id.toString();
-    console.log("Setting SSID cookie for userId:", userId);
+    console.log('Setting SSID cookie for userId:', userId);
 
+    // SSID cookie
     res.cookie('ssid', userId, {
       httpOnly: true,
       secure: true, // Use only over HTTPS
@@ -74,8 +44,8 @@ cookieController.setSSIDCookie = (req, res, next) => {
     });
     return next();
   } else {
-    // Handle error case if no account found
-    console.error("Error: User account is missing in res.locals.");
+    // handle error case if no account found
+    console.error('Error: User account is missing in res.locals.');
     return next({
       log: 'cookieController.setSSIDCookie',
       message: { err: 'User ID is missing from res.locals.account' },
@@ -96,7 +66,7 @@ module.exports = cookieController;
 //       httpOnly: true,
 //       secure: true,
 //     });
-  
+
 //     return next();
 //   } else {
 //     const err = new Error('failed to get ssid')

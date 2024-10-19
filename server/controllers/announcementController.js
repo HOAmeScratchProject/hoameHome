@@ -1,11 +1,12 @@
 const db = require('../models/hoameModels');
 
+/*
+  Manges CRUD of announcments to db
+*/
+
 const announcementController = {};
 
-/**
- * getAllUsers - retrieve all users from the database and stores it into res.locals
- * before moving on to next middleware.
- */
+// function to retrieve all users from db
 announcementController.getAllAnnouncements = async (req, res, next) => {
   try {
     const allAnnouncementsString =
@@ -19,6 +20,7 @@ announcementController.getAllAnnouncements = async (req, res, next) => {
       'Error in announcementController.getAllAnnouncements.js: ',
       err
     );
+
     return next({
       log:
         `Error in announcementController.getAllAnnouncements.js ERROR:` + err,
@@ -30,11 +32,9 @@ announcementController.getAllAnnouncements = async (req, res, next) => {
     });
   }
 };
-// create Announcements
+// function to create announcements
 announcementController.createAnnouncements = async (req, res, next) => {
   const { title, message } = req.body;
-  //const createAnnouncementString = ''
-  // const createAnnouncement = await db.query(createAnnouncement)
 
   // check that a title and message exist
   if (!title || !message) {
@@ -52,9 +52,7 @@ announcementController.createAnnouncements = async (req, res, next) => {
     const query =
       'INSERT INTO announcements (title,message, datetime) VALUES ($1, $2, NOW()) RETURNING *';
     const values = [title, message];
-    // do query
     const result = await db.query(query, values);
-    // store query
     res.locals.announcement = result.rows[0];
 
     return next();
@@ -70,16 +68,13 @@ announcementController.createAnnouncements = async (req, res, next) => {
   }
 };
 
-// delete Announcements
-//every announcement will have a trash can in the corner - capturing the announcement Id that places
-//a delete request
+// function to delete announcements by its ID
 announcementController.deleteAnnouncement = async (req, res, next) => {
   const { id } = req.params;
 
   try {
     // sql query to delete by id
     const query = 'DELETE FROM announcements WHERE id = $1 RETURNING *;';
-    // do query
     const result = await db.query(query, [id]);
 
     // if no announcement to delete return 404
@@ -90,7 +85,6 @@ announcementController.deleteAnnouncement = async (req, res, next) => {
         message: { err: 'Announcement not found' },
       });
     }
-    // store query
     res.locals.deletedAnnouncement = result.rows[0];
     console.log(
       'res.locals.deletedAnnouncement',
@@ -107,32 +101,3 @@ announcementController.deleteAnnouncement = async (req, res, next) => {
 };
 
 module.exports = announcementController;
-
-//posting an announcement to the database  // Commenting out keeping createAnnouncment for now.
-// announcementController.postAnnouncement = async (req, res, next) => {
-//   //capture the current date and time to post to database under formatted_date
-//   const now = new Date();
-//   const formattedDate = now.toLocaleString();
-//   console.log(formattedDate)
-
-//   //capture the title and message from the request body
-//   const { message, title } = req.body
-
-//   //post the new message to the database
-//   try {
-//     const insertMessageString = 'INSERT into announcements (title, message, formatted_date) VALUES($1, $2, $3)';
-//     const postMessage = await db.query(insertMessageString, [title, message, formattedDate]);
-//     console.log("created a new message!", postMessage)
-//     // res.locals.announcements = usersResult.rows;
-//     return next();
-//   } catch (err) {
-//     // Using console.error vs console.log to specifically log an error object for handling errors.
-//     console.error('Error in announcementController.postAnnouncement.js: ', err);
-//     return next({
-//       log: `Error in announcementController.postAnnouncement.js ERROR:` + err,
-//       status: 500, // Internal server error
-//       // Message users see.
-//       message: { err: 'An error occurred while retrieving announcements. Please try again later.'},
-//     });
-//   }
-// }
