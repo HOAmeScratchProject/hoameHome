@@ -2,7 +2,6 @@ const db = require("../models/hoameModels.js");
 
 const roleController = {};
 
-
 // Function to get roles by userId
 roleController.getUserRoles = async (userId) => {
   const query = `
@@ -14,12 +13,12 @@ roleController.getUserRoles = async (userId) => {
   `;
 
   const values = [userId];
-  
+
   try {
     const result = await db.query(query, values);
-    return result.rows.map(row => row.role_name); // Return list of role names
+    return result.rows.map((row) => row.role_name); // Return list of role names
   } catch (err) {
-    throw new Error('Error fetching user roles: ' + err.message);
+    throw new Error("Error fetching user roles: " + err.message);
   }
 };
 
@@ -27,27 +26,44 @@ roleController.getUserRoles = async (userId) => {
 roleController.checkPermissions = (requiredRoles) => {
   return (req, res, next) => {
     try {
+      // Check if session and user exist
+      // if (!req.session || !req.session.user) {
+      //   console.error("Session or user object is missing");
+      //   return res
+      //     .status(403)
+      //     .json({ message: "Access Denied: Not Authorized" });
+      // }
+
+      // const userRoles = req.session.user.roles; // Fetch the roles from session
+
       const userRoles = req.session.user ? req.session.user.roles : null;
 
       // If no roles found or user is not logged in
       if (!userRoles) {
-        return res.status(403).json({ message: 'Access Denied: Not Authorized' });
+        return res
+          .status(403)
+          .json({ message: "Access Denied: Not Authorized" });
       }
 
-      // Check if the user has at least one of the required roles
-      const hasPermission = userRoles.some(role => requiredRoles.includes(role));
+      // Check if user has at least one required role
+      const hasPermission = userRoles.some((role) =>
+        requiredRoles.includes(role)
+      );
 
       if (!hasPermission) {
-        return res.status(403).json({ message: 'Access Denied: Insufficient Permissions' });
+        return res
+          .status(403)
+          .json({ message: "Access Denied: Insufficient Permissions" });
       }
 
-      next(); // User has the correct role, proceed to next middleware or route handler
+      next(); // Proceed if user has the required role
     } catch (err) {
-      console.error('Error in checkPermissions middleware:', err);
-      return res.status(500).json({ message: 'Server Error: Unable to check permissions' });
+      console.error("Error in checkPermissions middleware:", err);
+      return res
+        .status(500)
+        .json({ message: "Server Error: Unable to check permissions" });
     }
   };
 };
-
 
 module.exports = roleController;

@@ -69,6 +69,8 @@ userController.signup = async (req, res, next) => {
 };
 
 userController.login = async (req, res, next) => {
+  // console.log("User roles: ", req.session.user.roles);
+
   let { username, password } = req.body;
   try {
     const loginString =
@@ -76,7 +78,7 @@ userController.login = async (req, res, next) => {
     // store as lowercase fir ease
     const user = await db.query(loginString, [username.toLowerCase()]);
     // check for no user found and if no user then login failure and en
-    if(user.rowCount === 0) {
+    if(user.rowCount === 0 ) {
       res.locals.login = false;
     return res.status(401).json({ message:'Invalid username or password'});
     }
@@ -85,13 +87,17 @@ userController.login = async (req, res, next) => {
       console.log("login successful", user.rows[0]);
       const userId = user.rows[0].id;
       const roles = await roleController.getUserRoles(userId); // Fetch roles
+
+      // Set user info (including roles) in session
+      req.session.user = {
+        id: userId,
+        username: user.rows[0].username,
+        roles: roles, // Store the user's roles in the session
+      };
+
       res.locals.login = true;
       res.locals.account = [{ ...user.rows[0], roles }];
-        //  console.log(
-        //    "Login successful, res.locals.account:",
-        //    res.locals.account
-        //  );
-
+      console.log("Session user data:", req.session.user); // Debug log
     } else {
       res.locals.login = false;
       console.log('login not successful try again');
