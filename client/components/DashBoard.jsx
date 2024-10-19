@@ -5,6 +5,7 @@ import Directory from './Directory';
 //import BidsQuotes from './BidsQuotes';
 import Documents from './Documents';
 import Bids from './Bids';
+import Logout from "./Logout";
 
 const Dashboard = ({ onLogout }) => {
   //handle signout
@@ -29,33 +30,34 @@ const Dashboard = ({ onLogout }) => {
   };
 
   return (
-    <div className='dashboard'>
+    <div className="dashboard">
       <header>
-        <h1 className='pageTitle'>Welcome HOAme Brian!</h1>
-        <button onClick={handleLogout}>Sign Out</button>
+        <h1 className="pageTitle">Welcome HOAme Brian!</h1>
+        {/* <button onClick={handleLogout}>Sign Out</button> */}
+        <Logout /> {/* Use the Logout component to handle backend logout */}
       </header>
 
-      <nav className='navigation'>
-        <button className='tab' onClick={handleClick}>
+      <nav className="navigation">
+        <button className="tab" onClick={handleClick}>
           Announcements
         </button>
-        <select onChange={handleOptions} className='select'>
-          <option value='Announcement'>Select Tab</option>
-          <option value='Documents'>Documents</option>
-          <option value='MeetingMinutes'>Meeting Minutes</option>
-          <option value='Bids'>Bids/Quotes</option>
+        <select onChange={handleOptions} className="select">
+          <option value="Announcement">Select Tab</option>
+          <option value="Documents">Documents</option>
+          <option value="MeetingMinutes">Meeting Minutes</option>
+          <option value="Bids">Bids/Quotes</option>
         </select>
 
-        <button onClick={handleClick} className='tab'>
+        <button onClick={handleClick} className="tab">
           Directory
         </button>
       </nav>
 
-      <div className='window'>
-        {activeTab === 'Announcements' && <Announcements />}
-        {activeTab === 'Documents' && <Documents />}
-        {activeTab === 'Directory' && <Directory />}
-        {activeTab === 'Bids' && <Bids />}
+      <div className="window">
+        {activeTab === "Announcements" && <Announcements />}
+        {activeTab === "Documents" && <Documents />}
+        {activeTab === "Directory" && <Directory />}
+        {activeTab === "Bids" && <Bids />}
       </div>
     </div>
   );

@@ -36,7 +36,7 @@ userController.signup = async (req, res, next) => {
   username = username.toLowerCase();
   try {
     const signupString =
-      'INSERT into users (first_name, last_name, street_address, phone, username, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+      "INSERT into users (first_name, last_name, street_address, phone, username, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
     const newUser = await db.query(signupString, [
       first_name,
       last_name,
@@ -45,7 +45,17 @@ userController.signup = async (req, res, next) => {
       username,
       password,
     ]);
+    // Check if newUser.rows is populated
+    if (!newUser.rows.length) {
+      return next({
+        log: "signup",
+        message: { err: "User signup failed, no user returned." },
+      });
+    }
+
     res.locals.account = newUser.rows;
+    // Debugging log to check if account is populated
+    console.log("Signup successful, res.locals.account:", res.locals.account);
     return next();
   } catch (err) {
     console.log(err);
@@ -68,7 +78,7 @@ userController.login = async (req, res, next) => {
     // check for no user found and if no user then login failure and en
     if(user.rowCount === 0) {
       res.locals.login = false;
-    return res.status(401).json ({ message:'Invalid username or password'});
+    return res.status(401).json({ message:'Invalid username or password'});
     }
     // compare password to hashed password in db
     if (password === user.rows[0].password) {
@@ -76,7 +86,12 @@ userController.login = async (req, res, next) => {
       const userId = user.rows[0].id;
       const roles = await roleController.getUserRoles(userId); // Fetch roles
       res.locals.login = true;
-      res.locals.account = { ...user.rows[0], roles };
+      res.locals.account = [{ ...user.rows[0], roles }];
+        //  console.log(
+        //    "Login successful, res.locals.account:",
+        //    res.locals.account
+        //  );
+
     } else {
       res.locals.login = false;
       console.log('login not successful try again');

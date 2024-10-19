@@ -1,4 +1,5 @@
 import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';  // Import routing components
 import Dashboard from './components/DashBoard';
 import Login from './components/Login';
 import { useState } from 'react';
@@ -6,14 +7,37 @@ import { useState } from 'react';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+ const handleLogout = () => {
+   setIsLoggedIn(false); // This will handle updating the state to reflect logged out status
+ };
+  // return (
+  //   <div>
+  //     {isLoggedIn ? (
+  //       <Dashboard onLogout={handleLogout} />
+  //     ) : (
+  //       <Login onLogin={setIsLoggedIn} />
+  //     )}
+  //   </div>
+  // );
   return (
-    <div>
-      {isLoggedIn ? (
-        <Dashboard onLogout={setIsLoggedIn} />
-      ) : (
-        <Login onLogin={setIsLoggedIn} />
-      )}
-    </div>
+    <Routes>
+      {/* Redirect to dashboard if logged in, else redirect to login */}
+      <Route
+        path="/"
+        element={
+          isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />
+        }
+      />
+
+      {/* Define the login route */}
+      <Route path="/login" element={<Login onLogin={setIsLoggedIn} />} />
+
+      {/* Define the dashboard route, with logout handling */}
+      <Route
+        path="/dashboard"
+        element={<Dashboard onLogout={() => setIsLoggedIn(false)} />}
+      />
+    </Routes>
   );
 };
 
