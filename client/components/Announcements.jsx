@@ -1,37 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import MessageCard from './MessageCard';
 
+/*
+  Manage and display a list of announcements, its does CRUD
+  and displays them in the UI using a child component MessageCard
+*/
+
 const Announcements = () => {
+  // state variables
   const [announcements, setAnnouncements] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newTitle, setNewTitle] = useState('');
   const [newMessage, setNewMessage] = useState('');
   const [error, setError] = useState('');
 
+  // Function to fetch announcements from backend
   const getAnnouncements = async () => {
     // console.log('get messages is working!!');
     try {
       const response = await fetch(`http://localhost:3000/api/announcements`);
       const data = await response.json();
       console.log('Fetched users:', data);
-      setAnnouncements(data);
+      setAnnouncements(data); // insert the fetch into state
     } catch (error) {
       console.log('error fetching users:', error);
     } finally {
-      setLoading(false);
+      setLoading(false); // change to false after fetch
     }
   };
 
-  // use useEffect to fetch announcements when componet works
+  // use useEffect to fetch announcements when first render
   useEffect(() => {
     getAnnouncements();
   }, []);
 
+  // function to handle adding new announcment
   const postMessage = async (e) => {
     e.preventDefault(); // prevent from from refresh
 
     if (!newTitle || !newMessage) {
-      setError('Title & Message are required!'); // check for validation
+      setError('Title & Message are required!'); // check for validation of both fields
       return;
     }
 
@@ -41,7 +49,7 @@ const Announcements = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: "include", // Include cookies in the request
+        credentials: 'include', // Include cookies in the request for session management
         body: JSON.stringify({
           title: newTitle,
           message: newMessage,
@@ -53,24 +61,12 @@ const Announcements = () => {
       console.log('Raw response:', responseText);
 
       if (response.ok) {
-        // Fetch announcements again to ensure the latest list is loaded
+        // resfresh announcements again to ensure the latest list is loaded
         getAnnouncements();
         //clear feilds and error after succesful post
         setNewTitle('');
         setNewMessage('');
         setError('');
-
-        // const newAnnouncement = responseText ? JSON.parse(responseText) : null;
-
-        // if (newAnnouncement) {
-        //   setAnnouncements([newAnnouncement, ...announcements]);
-
-        //   // clear fields and error
-        //   setNewTitle("");
-        //   setNewMessage("");
-        // } else {
-        //   console.log("no content on response");
-        // }
       } else {
         console.log('Failed to post new Announcment');
         setError('Failed t post new annoucement, try again');
@@ -91,7 +87,7 @@ const Announcements = () => {
         method: 'DELETE',
       });
 
-      // Update the state to remove the deleted announcement from the UI
+      // update state to remove deleted announcement from UI
       setAnnouncements(
         announcements.filter((announcement) => announcement.id !== id)
       );
@@ -160,14 +156,3 @@ const Announcements = () => {
 };
 
 export default Announcements;
-// const [announcements] = useState([
-//   {
-//     date: 'October 5, 2024',
-//     message: 'Water main will be shut off for repairs starting at 7pm',
-//   },
-//   {
-//     date: 'October 8, 2024',
-//     message: 'Please note there will be maintenance on the UGLY PEDRAM',
-//   },
-// ]);
-// use map to make sure announcements has date,message

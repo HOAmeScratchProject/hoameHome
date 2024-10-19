@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
+/*
+  Allow users to upload, view , and list documents in db
+*/
 const Documents = () => {
+  // state variables
   const [documents, setDocuments] = useState([]); // state for documents from SQL
   const [file, setFile] = useState(null); // state for file
 
@@ -35,7 +39,8 @@ const Documents = () => {
     }
   };
 
-  //when View Doc button is clicked in Documents component - renders the doc
+  // function to open a documment in new tab
+  // when the View Doc button is clicked
   const viewDocuments = async (filename) => {
     console.log('CLICKED VIEW DOCS', filename);
     window.open(`http://localhost:3000/upload/${filename}`, '_blank');
@@ -46,8 +51,8 @@ const Documents = () => {
     try {
       const response = await fetch('http://localhost:3000/api/getDocs');
       const docs = await response.json();
-      // console.log('HERE ARE THE DOCS', docs);
-      // console.log('Did I capture the Doc Name?', docs[0].filename, docs[0].content_type, docs[0].file_size);
+
+      // create list of document cards
       const docsList = [];
       for (let i = 0; i < docs.length; i++) {
         docsList.push(
@@ -64,13 +69,13 @@ const Documents = () => {
           </div>
         );
       }
-      // console.log('DOCSLIST??', docsList);
-      setDocuments(docsList);
+      setDocuments(docsList); // update state
     } catch (error) {
       console.error('error fetching documents', error);
     }
   };
 
+  // useEffect hook to load documents when first rneder
   useEffect(() => {
     loadDocuments();
   }, []);
@@ -78,7 +83,7 @@ const Documents = () => {
   return (
     <div>
       <h2>Documents HOAme</h2>
-      {/* {documents} */}
+      {/* {display the list of document or message if no documents} */}
       {documents.length > 0 ? documents : <p>No Documents Available</p>}
     </div>
   );

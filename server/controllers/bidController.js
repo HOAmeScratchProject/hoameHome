@@ -2,34 +2,39 @@ const db = require('../models/hoameModels.js');
 const multer = require('multer');
 const path = require('path');
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      // destination folder where files will be stored
-      cb(null, 'uploads/'); 
-    },
-    filename: (req, file, cb) => {
-      // filename format timestamp and orignial filename for uniquness
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      cb(null, `${uniqueSuffix}-${file.originalname}`);
-    },
-  });
+/*
+   Handles file uploads with multer to manage uploads and storage
+*/
 
-  // initialize multer upload 
+// make storage for multer to handle uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // destination folder where files will be stored
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    // filename format timestamp and orignial filename for uniquness
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, `${uniqueSuffix}-${file.originalname}`);
+  },
+});
+
+// initialize multer upload
 const upload = multer({
-    storage: storage, 
-    limits: { fileSize: 1024 * 1024 * 50 }, // set a file size limit of 50 mb
-    fileFilter: (req, file, cb) => {
-      // allow all file types
-      cb(null, true);
-    },
-  });
+  storage: storage,
+  limits: { fileSize: 1024 * 1024 * 50 }, // set a file size limit of 50 mb
+  fileFilter: (req, file, cb) => {
+    // allow all file types
+    cb(null, true);
+  },
+});
 
 const bidController = {};
 
-// handle file upload expect a single file with name 'file'
+// function to handle file upload expect a single file with name 'file'
 bidController.uploadFile = upload.single('file');
 
-// handle processing after file upload
+// funtion to handle processing after file upload
 bidControllerr.handleFileUpload = (req, res, next) => {
   try {
     // check if a file was uploaded
