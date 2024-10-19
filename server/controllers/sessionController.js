@@ -48,7 +48,7 @@ sessionController.startSession = async (req, res, next) => {
  * make sure user authenticated before access
  */
 sessionController.isAuthenticated = async (req, res, next) => {
-  console.log('Chceking authentication...');
+  console.log('Checking authentication...');
   try {
     // get session id from cookies and check for no ssid in cookies
     const { ssid } = req.cookies;

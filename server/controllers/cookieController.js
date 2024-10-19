@@ -22,7 +22,7 @@ const cookieController = {};
  */
 cookieController.setCookie = (req, res, next) => {
   //  'ssid' is our primary session identifier
-  console.log('setting Cookie')
+  console.log('Cookie Set')
   res.cookie('ssid', res.locals.session.id, {
     httpOnly: true,
     secure: false, // set secure to false for local development
