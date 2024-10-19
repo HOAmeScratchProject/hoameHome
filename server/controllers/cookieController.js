@@ -20,14 +20,39 @@ const cookieController = {};
 /**
  * setCookie - set a session cookie (for any session-specific cookies)
  */
+// cookieController.setCookie = (req, res, next) => {
+  
+//   //  'ssid' is our primary session identifier
+//   console.log('Setting Cookie')
+//   res.cookie("ssid", res.locals.session.id, {
+//     httpOnly: true,
+//     secure: true, // set secure to false for local development,Use 'true' only if served over HTTPS
+//     maxAge: 60 * 60 * 1000, // 1 hour
+//   });
+//   console.log("Cookie set: ", res.locals.session.id);
+//   return next();
+// };
+
 cookieController.setCookie = (req, res, next) => {
+  // Check if session and session ID exist in res.locals
+  if (!res.locals.session || !res.locals.session.id) {
+    console.error("Session ID missing from res.locals");
+    return next({
+      log: "Error: Session ID missing in cookieController.setCookie",
+      status: 500,
+      message: { err: "An error occurred while setting the session cookie." },
+    });
+  }
+
   //  'ssid' is our primary session identifier
-  console.log('Cookie Set')
-  res.cookie('ssid', res.locals.session.id, {
+  console.log("Setting Cookie for session ID:", res.locals.session.id);
+  res.cookie("ssid", res.locals.session.id, {
     httpOnly: true,
-    secure: false, // set secure to false for local development
+    secure: false, // set secure to true if using HTTPS
     maxAge: 60 * 60 * 1000, // 1 hour
   });
+
+  console.log("Cookie set successfully: ", res.locals.session.id);
   return next();
 };
 
