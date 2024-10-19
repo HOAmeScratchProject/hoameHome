@@ -6,9 +6,23 @@ const sessionController = {};
  * startSession - create and save a new Session into the database. with 1 hr time valid for
  */
 sessionController.startSession = async (req, res, next) => {
-  
+  console.log('Session started')
   try {
+
+    if (!res.locals.account || !res.locals.account[0]) {
+      return next({
+        log: 'startSession',
+        message: {err:'User account is missing in res.locals.'},
+      })
+    }
     const { id } = res.locals.account[0]; // get the id from user in database
+
+    if (!id) {
+      return next({
+        log: 'startSession',
+        message: { err: "User ID is missing from account"},
+      });
+    }
     console.log('Extracting id from res locals account', res.locals.account[0], id);
     // find session expiration for 1 hr
     const createdAT = new Date();
@@ -34,20 +48,39 @@ sessionController.startSession = async (req, res, next) => {
  * make sure user authenticated before access
  */
 sessionController.isAuthenticated = async (req, res, next) => {
+  console.log('Checking authentication...');
   try {
     // get session id from cookies and check for no ssid in cookies
-    const { ssid } = req.cookies 
-    if(!ssid) return res.status(401).json({message: "BEGONE, YOUR ACCESS HAS BEEN DENIED. NO ACTIVE SESSION FOUND"});
-    
+    const { ssid } = req.cookies;
+    console.log("SSID from cookies:", ssid); // Log the cookie to verify it's being sent
+
+    if (!ssid)
+      return res
+        .status(401)
+        .json({
+          message:
+            "BEGONE, YOUR ACCESS HAS BEEN DENIED. NO ACTIVE SESSION FOUND",
+        });
+
     // check session exist and if not expired
-    const query = 'SELECT * FROM sessions WHERE user_id = $1';
+    const query = "SELECT * FROM sessions WHERE id = $1";
     const result = await db.query(query, [ssid]); // do query
-    if(result.rowCount === 0) return res.status(401).json({message: "BEGONE, YOUR ACCESS HAS BEEN DENIED. NO SESSION FOUND"});
-  
-    const currentTime = new Date (); // get current time
+    if (result.rowCount === 0)
+      return res
+        .status(401)
+        .json({
+          message: "BEGONE, YOUR ACCESS HAS BEEN DENIED. NO SESSION FOUND",
+        });
+
+    const currentTime = new Date(); // get current time
     const session = result.rows[0]; // get session details such as expires_time
-    if(currentTime>session.expires_time) return res.status(401).json({ message: "BEGONE, YOUR ACCESS HAS BEEN DENIED. SESSION EXPIRED" });
-  
+    if (currentTime > session.expires_time)
+      return res
+        .status(401)
+        .json({
+          message: "BEGONE, YOUR ACCESS HAS BEEN DENIED. SESSION EXPIRED",
+        });
+        console.log('authenticated')
     return next();
   } catch (error) {
     return next({
@@ -62,17 +95,17 @@ sessionController.isAuthenticated = async (req, res, next) => {
  * handle logout by deleting session from db and clearing session cookie
  */
 sessionController.endSession = async (req, res, next) => {
-  
+  console.log('ending session...')
   try {
-     const { id } = req.cookies.ssid // ssid is stored in cookies
+     const { ssid } = req.cookies // ssid is stored in cookies
 
      // query to delete session based on user_id
-     const deleteSession ='DELETE FROM sessions WHERE user_id = $1';
-     await db.query(deleteSession, [id]);
+     const deleteSession ='DELETE FROM sessions WHERE id = $1';
+     await db.query(deleteSession, [ssid]);
 
      //clear cookie
      res.clearCookie('ssid');
-     
+     console.log('session deleted and cookie cleared')
      return next();
   } catch (error) {
     return next({

@@ -72,8 +72,8 @@ router.post(
   "/announcements",
   sessionController.isAuthenticated,
   // Only 'admin' and 'owner' can create
-  //roleController.checkPermissions(["admin", "owner"]),
   roleController.checkPermissions(["admin"]),
+  // roleController.checkPermissions(["admin"]),
   announcementController.createAnnouncements,
   (req, res) => {
     res.status(201).json(res.locals.announcements);
@@ -124,7 +124,29 @@ router.delete(
     return res.status(200).json(res.locals.deletedDoc);
   }
 );
+
+// route for file upload.   --- Not in use
+// router.post(
+//   '/upload',
+//   bidControllerr.uploadFile,
+//   bidControllerr.handleFileUpload
+// );
 module.exports = router;
+
+// // -- Stretcth --  Create secure session id before starting session
+// router.post(
+//   '/signup',
+//   userController.signup,
+//   cookieController.setSSIDCookie,  //Set secure session ID cookie
+//   sessionController.startSession, //start a session and post to the database
+//   (req, res) => {
+//     res.status(201).json(res.locals.account);
+//   }
+// );
+
+
+
+
 
 // Commenting out for now, using announcementController.createAnnouncements instead.
 // router.post('/announcements',
