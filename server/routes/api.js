@@ -5,7 +5,7 @@ const announcementController = require('../controllers/announcementController');
 const cookieController = require('../controllers/cookieController.js');
 const sessionController = require('../controllers/sessionController.js');
 //const roleController = require("./server/controllers/roleController");
-const roleController = require("../controllers/roleController");
+const roleController = require('../controllers/roleController');
 
 //require multer for /upload endpoint
 const multer = require('multer');
@@ -14,10 +14,7 @@ const upload = multer();
 const router = express.Router();
 
 // route to get all users
-router.get(
-  '/users', 
-  userController.getAllUsers, 
-  (req, res) => {
+router.get('/users', userController.getAllUsers, (req, res) => {
   res.status(200).json(res.locals.users);
 });
 
@@ -26,37 +23,37 @@ router.post(
   '/signup',
   userController.signup,
   sessionController.startSession, //start a session an post to the database
-  cookieController.setCookie, 
+  cookieController.setCookie,
   (req, res) => {
     res.status(201).json(res.locals.account);
   }
 );
 // route to login
 router.post(
-  '/login', 
-  userController.login, 
+  '/login',
+  userController.login,
   sessionController.startSession, // start session after good login
   cookieController.setCookie, // set cookie after session creation
   (req, res) => {
-  res.status(200).json(res.locals.login);
-});
-
-// route to check if user is authenticated
-router.get( 
-  '/auth/check',
-  sessionController.isAuthenticated,
-  (req, res) => {
-    res.status(200).json({message: 'User is authenticated.'});
+    // console.log('RESLOCALSFIRSTNAME', res.locals.firstName); //- currently undefined
+    res
+      .status(200)
+      .json({ login: res.locals.login, firstName: res.locals.firstName });
   }
 );
+
+// route to check if user is authenticated
+router.get('/auth/check', sessionController.isAuthenticated, (req, res) => {
+  res.status(200).json({ message: 'User is authenticated.' });
+});
 // route to logout(end session)
-router.post( 
+router.post(
   '/logout',
   sessionController.isAuthenticated,
   sessionController.endSession,
   (req, res) => {
     res.clearCookie('ssid');
-    res.status(200).json({message: 'Logged out successful'});
+    res.status(200).json({ message: 'Logged out successful' });
   }
 );
 // route to get all announcements
@@ -69,10 +66,10 @@ router.get(
 );
 // route to create announcement
 router.post(
-  "/announcements",
+  '/announcements',
   sessionController.isAuthenticated,
   // Only 'admin' and 'owner' can create
-  roleController.checkPermissions(["admin"]),
+  roleController.checkPermissions(['admin']),
   // roleController.checkPermissions(["admin"]),
   announcementController.createAnnouncements,
   (req, res) => {
@@ -82,10 +79,10 @@ router.post(
 
 // route to delete announcement
 router.delete(
-  "/announcements/:id",
+  '/announcements/:id',
   sessionController.isAuthenticated,
   // Only 'admin' can delete
-  roleController.checkPermissions(["admin"]),
+  roleController.checkPermissions(['admin']),
   announcementController.deleteAnnouncement,
   (req, res) => {
     // console.log('Made it to response in api.js', res.locals.announcements )
@@ -108,11 +105,8 @@ router.post(
 );
 
 // Route to get documents from DB
-router.get(
-  '/getDocs', 
-  documentController.getAllDocs, 
-  (req, res) => {
-  console.log('Hello from /viewDocs route in api.js"');
+router.get('/getDocs', documentController.getAllDocs, (req, res) => {
+  //console.log('Hello from /viewDocs route in api.js"');
   return res.status(200).json(res.locals.docs);
 });
 
@@ -133,7 +127,7 @@ router.delete(
 // );
 module.exports = router;
 
-// // -- Stretcth --  Create secure session id before starting session
+// // -- Stretch --  Create secure session id before starting session
 // router.post(
 //   '/signup',
 //   userController.signup,
@@ -143,10 +137,6 @@ module.exports = router;
 //     res.status(201).json(res.locals.account);
 //   }
 // );
-
-
-
-
 
 // Commenting out for now, using announcementController.createAnnouncements instead.
 // router.post('/announcements',
