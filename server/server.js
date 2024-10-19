@@ -4,22 +4,14 @@ const app = express();
 const apiRouter = require('./routes/api');
 const cookieParser = require('cookie-parser') //Using later on make sure to install
 const cors = require('cors');
-
+const session = require('express-session'); // Import express-session
 
 const PORT = 3000;
-
-app.use(cors());
-app.use(express.json());
-
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-
-app.use('/api', apiRouter);
-
 // CORS (Cross Origin Resource Sharing) Middleware
 app.use(
   cors({
     origin: 'http://localhost:8080', // Specify the origin
+    credentials:true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow specific methods
     allowedHeaders: [
       'Content-Type',
@@ -30,6 +22,29 @@ app.use(
     ], // Defining allowed headers
   })
 );
+
+// Session middleware
+app.use(
+  session({
+    secret: 'SecretKey', // Replace this with a strong secret key
+    resave: false, // Don't resave the session if it hasn't been modified
+    saveUninitialized: false, // Don't save uninitialized sessions
+    cookie: {
+      secure: false, // Set true if using HTTPS
+      httpOnly: true, // Cookie can't be accessed by JS on the client side
+      maxAge: 60 * 60 * 1000, // 1-hour session
+    },
+  })
+);
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+app.use('/api', apiRouter);
+
+
 
 app.use((req, res) =>
   res.status(404).send("This is not the page you're looking for...")

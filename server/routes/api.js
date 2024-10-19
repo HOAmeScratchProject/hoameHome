@@ -72,8 +72,8 @@ router.post(
   "/announcements",
   sessionController.isAuthenticated,
   // Only 'admin' and 'owner' can create
-  //roleController.checkPermissions(["admin", "owner"]),
   roleController.checkPermissions(["admin"]),
+  // roleController.checkPermissions(["admin"]),
   announcementController.createAnnouncements,
   (req, res) => {
     res.status(201).json(res.locals.announcements);
