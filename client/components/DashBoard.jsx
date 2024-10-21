@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import Announcements from './Announcements';
 import Directory from './Directory';
@@ -12,7 +13,10 @@ import home from '../styles/assets/png_h5pgb.png';
   to handle signout
 */
 
-const Dashboard = ({ onLogout, firstName }) => {
+const Dashboard = ({ onLogout }) => {
+  const location = useLocation();
+  const firstName = location.state.prop;
+  // console.log("FIRSTNAME", firstName)
   // state to track current active tab, default is announcements
   const [activeTab, setActiveTab] = useState('Announcements');
 
@@ -49,8 +53,7 @@ const Dashboard = ({ onLogout, firstName }) => {
       <header>
         <div className='welcomeBlock'>
           <h1 className='pageTitle' id='welcome'>
-            <img src={home} alt='home' className='homeIcon' /> Welcome HOAme
-            {firstName}!
+            <img src={home} alt='home' className='homeIcon' /> Welcome HOAme, {firstName}!
           </h1>
         </div>
         {/* <button onClick={handleLogout}>Sign Out</button> */}
