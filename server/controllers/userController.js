@@ -94,7 +94,7 @@ userController.login = async (req, res, next) => {
       const userId = user.rows[0].id;
       const firstName = user.rows[0].first_name; //capture the user first name to render to the dashboard
       const roles = await roleController.getUserRoles(userId); // Fetch roles
-
+      console.log('roles from login controller:',roles)
       // Set user info (including roles) in session
       req.session.user = {
         id: userId,

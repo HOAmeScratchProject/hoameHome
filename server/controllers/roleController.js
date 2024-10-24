@@ -21,6 +21,7 @@ roleController.getUserRoles = async (userId) => {
 
   try {
     const result = await db.query(query, values);
+    console.log('role result',result)
     return result.rows.map((row) => row.role_name); // return list of role names
   } catch (err) {
     throw new Error('Error fetching user roles: ' + err.message);
